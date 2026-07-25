@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yojana Atlas — Government Schemes for Indian Startups, Mapped</title>
+<meta name="description" content="A searchable map of 65+ Central Government schemes, plus PSU, regulator and State/UT initiatives, for Indian startups — grants, equity, loans, incubation, IP and market access.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%2316213D%22/><path d=%22M20 70 L50 25 L80 70%22 stroke=%22%23E8871E%22 stroke-width=%229%22 fill=%22none%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBFAF6;
+  --paper-alt:#F3F0E8;
+  --ink:#16213D;
+  --ink-soft:#4A5473;
+  --card:#FFFFFF;
+  --hairline:#DAD5C6;
+  --hairline-strong:#C7C0AC;
+  --saffron:#E8871E;
+  --saffron-ink:#8A4E0F;
+  --teal:#0F6A5F;
+  --violet:#5B4A8F;
+  --vermilion:#B23A2E;
+  --steel:#1F5C8B;
+  --amber:#C77A1F;
+  --charcoal:#4A4A46;
+  --shadow: 0 1px 2px rgba(22,33,61,.04), 0 8px 24px -12px rgba(22,33,61,.18);
+  --radius: 14px;
+  --maxw: 1180px;
+}
+:root[data-theme="dark"]{
+  --paper:#12182A;
+  --paper-alt:#171F35;
+  --ink:#F1EEE4;
+  --ink-soft:#B9BFD4;
+  --card:#1B2338;
+  --hairline:#31395222;
+  --hairline:#333d5c;
+  --hairline-strong:#414c6e;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.6);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#12182A;
+    --paper-alt:#171F35;
+    --ink:#F1EEE4;
+    --ink-soft:#B9BFD4;
+    --card:#1B2338;
+    --hairline:#333d5c;
+    --hairline-strong:#414c6e;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.6);
+  }
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'IBM Plex Sans', system-ui, sans-serif;
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{
+  font-family:'Rajdhani', 'IBM Plex Sans', sans-serif;
+  font-weight:700;
+  letter-spacing:.01em;
+  margin:0;
+  color:var(--ink);
+}
+.mono{font-family:'IBM Plex Mono', monospace;}
+a{color:inherit;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+@media (max-width:640px){ .wrap{padding:0 18px;} }
+
+/* ---------- Skip link / focus ---------- */
+.skip-link{position:absolute; left:-999px; top:0; background:var(--ink); color:var(--paper); padding:10px 16px; z-index:200; border-radius:0 0 8px 0;}
+.skip-link:focus{left:0;}
+:focus-visible{outline:3px solid var(--saffron); outline-offset:2px; border-radius:4px;}
+
+/* ---------- Header ---------- */
+header.site{
+  position:sticky; top:0; z-index:100;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--hairline);
+}
+.header-row{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 28px; gap:20px;
+}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+.brand-mark{
+  width:34px; height:34px; border-radius:9px;
+  background:var(--ink);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.brand-mark svg{width:19px; height:19px;}
+.brand-text{display:flex; flex-direction:column; line-height:1.1;}
+.brand-text b{font-family:'Rajdhani',sans-serif; font-size:1.28rem; font-weight:700; letter-spacing:.02em;}
+.brand-text span{font-size:.68rem; color:var(--ink-soft); font-family:'IBM Plex Mono',monospace; letter-spacing:.03em; text-transform:uppercase;}
+nav.main{display:flex; gap:26px; align-items:center;}
+nav.main a{
+  font-size:.92rem; font-weight:500; text-decoration:none; color:var(--ink-soft);
+  position:relative; padding:4px 0;
+}
+nav.main a::after{
+  content:''; position:absolute; left:0; right:0; bottom:-2px; height:2px;
+  background:var(--saffron); transform:scaleX(0); transform-origin:left;
+  transition:transform .25s ease;
+}
+nav.main a:hover{color:var(--ink);}
+nav.main a:hover::after{transform:scaleX(1);}
+.header-actions{display:flex; align-items:center; gap:10px;}
+.theme-toggle{
+  width:36px; height:36px; border-radius:50%; border:1px solid var(--hairline-strong);
+  background:var(--card); cursor:pointer; display:flex; align-items:center; justify-content:center;
+  color:var(--ink); font-size:15px;
+}
+.navburger{display:none; background:none; border:1px solid var(--hairline-strong); border-radius:8px; width:38px;height:38px; cursor:pointer; color:var(--ink);}
+@media (max-width:860px){
+  nav.main{display:none;}
+  .navburger{display:flex; align-items:center; justify-content:center;}
+}
+
+/* ---------- Hero ---------- */
+.hero{padding:64px 0 20px; position:relative; overflow:hidden;}
+.hero-grain{
+  position:absolute; inset:0; pointer-events:none; opacity:.5;
+  background-image:
+    linear-gradient(var(--hairline) 1px, transparent 1px);
+  background-size: 100% 34px;
+  -webkit-mask-image:linear-gradient(to bottom, black, transparent 85%);
+  mask-image:linear-gradient(to bottom, black, transparent 85%);
+  opacity:.35;
+}
+.hero-inner{position:relative; display:grid; grid-template-columns:1.1fr .8fr; gap:48px; align-items:end;}
+@media (max-width:900px){ .hero-inner{grid-template-columns:1fr;} }
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'IBM Plex Mono',monospace; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--saffron-ink); background:color-mix(in srgb, var(--saffron) 14%, transparent);
+  border:1px solid color-mix(in srgb, var(--saffron) 45%, transparent);
+  padding:5px 12px; border-radius:100px; margin-bottom:18px;
+}
+:root[data-theme="dark"] .eyebrow, @media (prefers-color-scheme:dark){ .eyebrow{color:#FFC98A;} }
+h1.headline{
+  font-size:clamp(2.4rem, 5.4vw, 4.1rem);
+  line-height:1.03;
+  letter-spacing:-.01em;
+}
+h1.headline .accent{color:var(--saffron);}
+.hero-sub{
+  margin-top:20px; max-width:52ch; color:var(--ink-soft); font-size:1.08rem;
+}
+.hero-cta{display:flex; gap:12px; margin-top:28px; flex-wrap:wrap;}
+.btn{
+  display:inline-flex; align-items:center; gap:8px; text-decoration:none; cursor:pointer;
+  font-weight:600; font-size:.95rem; padding:13px 22px; border-radius:100px; border:1px solid transparent;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn:hover{transform:translateY(-1px);}
+.btn-primary{background:var(--ink); color:var(--paper);}
+.btn-primary:hover{box-shadow:var(--shadow);}
+.btn-ghost{border-color:var(--hairline-strong); color:var(--ink); background:transparent;}
+.btn-ghost:hover{border-color:var(--ink);}
+
+/* Ledger stamp stats */
+.ledger{
+  border:1px solid var(--hairline-strong); border-radius:var(--radius);
+  background:var(--card); padding:20px 22px;
+  box-shadow:var(--shadow);
+}
+.ledger-title{
+  font-family:'IBM Plex Mono',monospace; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ink-soft); border-bottom:1px dashed var(--hairline-strong); padding-bottom:10px; margin-bottom:12px;
+  display:flex; justify-content:space-between;
+}
+.ledger-row{display:flex; justify-content:space-between; align-items:baseline; padding:9px 0; border-bottom:1px solid var(--hairline);}
+.ledger-row:last-child{border-bottom:none;}
+.ledger-row .num{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:1.15rem; color:var(--ink);}
+.ledger-row .lbl{font-size:.86rem; color:var(--ink-soft);}
+
+/* ---------- Lifecycle line (signature element) ---------- */
+.lifecycle{padding:56px 0 40px;}
+.lifecycle-head{display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:8px;}
+.lifecycle-head h2{font-size:1.7rem;}
+.lifecycle-head p{color:var(--ink-soft); font-size:.92rem; margin:6px 0 0;}
+.line-scroll{overflow-x:auto; padding:34px 4px 12px; -webkit-overflow-scrolling:touch;}
+.line-track{
+  position:relative; display:flex; min-width:760px; padding:0 10px;
+}
+.line-track::before{
+  content:''; position:absolute; top:22px; left:36px; right:36px; height:3px;
+  background:repeating-linear-gradient(to right, var(--hairline-strong) 0 10px, transparent 10px 16px);
+}
+.station{flex:1; position:relative; text-align:center; cursor:pointer; padding-top:0; background:none; border:none; color:inherit;}
+.station-dot{
+  width:46px; height:46px; border-radius:50%; background:var(--card); border:3px solid var(--ink);
+  margin:0 auto 14px; display:flex; align-items:center; justify-content:center;
+  font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:.85rem; position:relative; z-index:2;
+  transition:background .2s ease, transform .2s ease, border-color .2s ease;
+}
+.station:hover .station-dot, .station.active .station-dot{
+  background:var(--saffron); border-color:var(--saffron); color:#fff; transform:scale(1.08);
+}
+.station-label{font-weight:600; font-size:.9rem;}
+.station-desc{font-size:.76rem; color:var(--ink-soft); margin-top:3px; max-width:15ch; margin-inline:auto;}
+.station.active .station-label{color:var(--saffron-ink);}
+@media (max-width:640px){ .station-desc{display:none;} }
+
+/* ---------- Finder (guided quiz) ---------- */
+.finder{padding:20px 0 56px;}
+.finder-card{
+  background:var(--paper-alt); border:1px solid var(--hairline); border-radius:20px;
+  padding:32px; display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:18px; align-items:end;
+}
+@media (max-width:900px){ .finder-card{grid-template-columns:1fr 1fr;} }
+@media (max-width:560px){ .finder-card{grid-template-columns:1fr;} }
+.finder-head{grid-column:1/-1; margin-bottom:4px;}
+.finder-head h3{font-size:1.3rem;}
+.finder-head p{color:var(--ink-soft); font-size:.88rem; margin-top:4px;}
+.field label{display:block; font-size:.72rem; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft); margin-bottom:7px;}
+.field select{
+  width:100%; padding:11px 12px; border-radius:10px; border:1px solid var(--hairline-strong);
+  background:var(--card); color:var(--ink); font-size:.92rem; font-family:inherit; cursor:pointer;
+}
+.finder .btn-primary{white-space:nowrap;}
+
+/* ---------- Filter bar ---------- */
+.directory{padding:10px 0 80px;}
+.section-head{margin-bottom:22px;}
+.section-head h2{font-size:1.9rem;}
+.section-head p{color:var(--ink-soft); margin-top:6px; font-size:.95rem;}
+.filterbar{
+  position:sticky; top:66px; z-index:40; background:color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter:blur(8px); border:1px solid var(--hairline); border-radius:16px;
+  padding:14px 16px; margin-bottom:26px; display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+}
+.search-box{
+  display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--hairline-strong);
+  border-radius:10px; padding:9px 12px; flex:1 1 220px; min-width:180px;
+}
+.search-box input{border:none; outline:none; background:none; color:var(--ink); font-size:.92rem; width:100%; font-family:inherit;}
+.search-box svg{flex-shrink:0; opacity:.6;}
+select.chip-select{
+  padding:9px 10px; border-radius:10px; border:1px solid var(--hairline-strong); background:var(--card);
+  color:var(--ink); font-size:.85rem; cursor:pointer; font-family:inherit;
+}
+.result-count{font-family:'IBM Plex Mono',monospace; font-size:.78rem; color:var(--ink-soft); margin-left:auto; white-space:nowrap;}
+.clear-filters{
+  font-size:.8rem; color:var(--vermilion); background:none; border:none; cursor:pointer; text-decoration:underline; padding:4px 2px;
+}
+
+/* Category legend chips */
+.legend{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:22px;}
+.legend button{
+  display:flex; align-items:center; gap:7px; border:1px solid var(--hairline-strong); background:var(--card);
+  border-radius:100px; padding:6px 13px 6px 9px; font-size:.8rem; cursor:pointer; color:var(--ink-soft);
+}
+.legend button.active{color:var(--ink); border-color:var(--ink); font-weight:600;}
+.dot{width:9px; height:9px; border-radius:50%; flex-shrink:0;}
+
+/* ---------- Cards grid ---------- */
+.grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:16px;}
+.card{
+  background:var(--card); border:1px solid var(--hairline); border-radius:var(--radius);
+  padding:20px; cursor:pointer; text-align:left; display:flex; flex-direction:column; gap:10px;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  opacity:0; transform:translateY(10px); animation:cardIn .5s ease forwards;
+}
+@keyframes cardIn{ to{ opacity:1; transform:translateY(0);} }
+.card:hover{transform:translateY(-3px); box-shadow:var(--shadow); border-color:var(--hairline-strong);}
+.card-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+.card-tag{
+  font-family:'IBM Plex Mono',monospace; font-size:.68rem; letter-spacing:.04em; text-transform:uppercase;
+  padding:4px 9px; border-radius:100px; color:#fff; white-space:nowrap; flex-shrink:0;
+}
+.card-abbr{font-family:'IBM Plex Mono',monospace; font-size:.72rem; color:var(--ink-soft);}
+.card h3{font-size:1.12rem; line-height:1.3; font-family:'IBM Plex Sans',sans-serif; font-weight:600;}
+.card .ministry{font-size:.78rem; color:var(--ink-soft);}
+.card .desc{font-size:.87rem; color:var(--ink-soft); flex-grow:1;}
+.card-foot{display:flex; justify-content:space-between; align-items:center; padding-top:10px; border-top:1px dashed var(--hairline); font-size:.78rem;}
+.card-foot .benefit{font-family:'IBM Plex Mono',monospace; color:var(--teal); font-weight:600; font-size:.76rem;}
+:root[data-theme="dark"] .card-foot .benefit{color:#6FCFC0;}
+.card-foot .stage{color:var(--ink-soft);}
+
+.empty-state{
+  text-align:center; padding:60px 20px; color:var(--ink-soft); border:1px dashed var(--hairline-strong); border-radius:16px;
+}
+.load-more-wrap{display:flex; justify-content:center; margin-top:30px;}
+
+/* ---------- Modal ---------- */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(15,20,35,.55); backdrop-filter:blur(3px);
+  display:none; align-items:flex-start; justify-content:center; z-index:200; padding:5vh 18px; overflow-y:auto;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--card); border-radius:20px; max-width:680px; width:100%; padding:32px;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.4); position:relative; margin-bottom:5vh;
+}
+.modal-close{
+  position:absolute; top:18px; right:18px; width:34px; height:34px; border-radius:50%;
+  border:1px solid var(--hairline-strong); background:var(--paper); cursor:pointer; color:var(--ink); font-size:16px;
+}
+.modal-tag-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;}
+.modal h2{font-size:1.55rem; line-height:1.25; margin-bottom:4px; padding-right:36px;}
+.modal .ministry{color:var(--ink-soft); font-size:.9rem; margin-bottom:20px;}
+.modal-section{margin-top:18px;}
+.modal-section h4{
+  font-family:'IBM Plex Mono',monospace; font-size:.7rem; text-transform:uppercase; letter-spacing:.07em;
+  color:var(--saffron-ink); margin-bottom:6px;
+}
+.modal-section p{font-size:.92rem; color:var(--ink); margin:0;}
+.modal-links{display:flex; gap:10px; margin-top:26px; flex-wrap:wrap;}
+
+/* ---------- Simple grids (PSU/State) ---------- */
+.simple-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:12px;}
+.simple-card{
+  border:1px solid var(--hairline); border-radius:12px; padding:15px 16px; background:var(--card);
+  text-decoration:none; display:block; transition:border-color .15s ease, transform .15s ease;
+}
+.simple-card:hover{border-color:var(--saffron); transform:translateY(-2px);}
+.simple-card b{font-size:.94rem; display:block; margin-bottom:4px;}
+.simple-card span{font-size:.78rem; color:var(--ink-soft);}
+
+/* ---------- Glossary ---------- */
+.glossary-list{display:grid; grid-template-columns:1fr 1fr; gap:0 40px;}
+@media (max-width:760px){ .glossary-list{grid-template-columns:1fr;} }
+.gterm{padding:16px 0; border-bottom:1px solid var(--hairline);}
+.gterm dt{font-weight:600; font-family:'Rajdhani',sans-serif; font-size:1.05rem;}
+.gterm dd{margin:4px 0 0; color:var(--ink-soft); font-size:.88rem;}
+
+/* ---------- Section rhythm ---------- */
+section{padding:70px 0;}
+.divider{border:none; border-top:1px solid var(--hairline); margin:0;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+.tabs{display:flex; gap:6px; border-bottom:1px solid var(--hairline); margin-bottom:30px; flex-wrap:wrap;}
+.tab-btn{
+  background:none; border:none; padding:11px 4px; margin-right:22px; font-size:.98rem; font-weight:600;
+  color:var(--ink-soft); cursor:pointer; position:relative; top:1px; border-bottom:2px solid transparent;
+}
+.tab-btn.active{color:var(--ink); border-bottom-color:var(--saffron);}
+
+/* ---------- Footer ---------- */
+footer{background:var(--ink); color:var(--paper); padding:52px 0 30px; margin-top:40px;}
+:root[data-theme="dark"] footer{background:#0B0F1C;}
+footer .foot-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:40px;}
+@media (max-width:760px){ footer .foot-grid{grid-template-columns:1fr;} }
+footer h4{color:var(--paper); font-family:'IBM Plex Mono',monospace; font-size:.72rem; text-transform:uppercase; letter-spacing:.07em; margin-bottom:14px; opacity:.7;}
+footer p, footer li{color:#C7CBDA; font-size:.86rem; line-height:1.6;}
+footer ul{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:9px;}
+footer a{text-decoration:none; color:#C7CBDA;}
+footer a:hover{color:var(--saffron);}
+.foot-bottom{
+  max-width:var(--maxw); margin:36px auto 0; padding:22px 28px 0; border-top:1px solid #2C3550;
+  display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-size:.78rem; color:#8890AC;
+}
+.disclaimer-box{background:#1E2842; border-radius:12px; padding:16px 18px; font-size:.8rem; color:#B9BFD4; margin-top:16px; line-height:1.6;}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:.01ms !important; transition-duration:.01ms !important;}
+}
+</style>
+</head>
+<body>
+<a href="#directory" class="skip-link">Skip to scheme directory</a>
+
+<header class="site">
+  <div class="header-row">
+    <a href="#top" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 70 L50 25 L80 70" stroke="#E8871E" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span class="brand-text"><b>Yojana Atlas</b><span>Startup Schemes, Mapped</span></span>
+    </a>
+    <nav class="main" aria-label="Primary">
+      <a href="#lifecycle">Lifecycle Map</a>
+      <a href="#finder">Guided Finder</a>
+      <a href="#directory">Directory</a>
+      <a href="#other-initiatives">PSU &amp; States</a>
+      <a href="#glossary">Glossary</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+      <button class="navburger" id="navBurger" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grain" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <div>
+        <span class="eyebrow">● 122 programmes · 4 tiers of Government support</span>
+        <h1 class="headline">Every scheme the<br>Government built for<br>your <span class="accent">startup.</span></h1>
+        <p class="hero-sub">Grants, equity, credit guarantees, incubation and market access — from DPIIT flagship schemes to PSU funds and state-level policy. One map, no jargon, no dead ends.</p>
+        <div class="hero-cta">
+          <a href="#finder" class="btn btn-primary">Find my scheme →</a>
+          <a href="#directory" class="btn btn-ghost">Browse 69 Central schemes</a>
+          <a href="#other-initiatives" class="btn btn-ghost">PSU &amp; State support →</a>
+        </div>
+      </div>
+      <div class="ledger">
+        <div class="ledger-title"><span>At a Glance</span><span>FY 2026</span></div>
+        <div class="ledger-row"><span class="lbl">Startup-specific Central schemes</span><span class="num" id="statA">—</span></div>
+        <div class="ledger-row"><span class="lbl">Startup-relevant Central schemes</span><span class="num" id="statB">—</span></div>
+        <div class="ledger-row"><span class="lbl">PSU &amp; regulator initiatives</span><span class="num" id="statPsu">—</span></div>
+        <div class="ledger-row"><span class="lbl">State &amp; UT policies indexed</span><span class="num" id="statState">—</span></div>
+        <div class="ledger-row"><span class="lbl">Nodal ministries &amp; agencies</span><span class="num" id="statMinistries">—</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIFECYCLE LINE -->
+  <section id="lifecycle" class="lifecycle">
+    <div class="wrap">
+      <div class="lifecycle-head">
+        <h2>The Startup Line</h2>
+        <p>Every stage of a startup's journey has a stop. Tap one to see what's running there.</p>
+      </div>
+      <div class="line-scroll">
+        <div class="line-track" id="lineTrack" role="tablist" aria-label="Startup lifecycle stages"></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- GUIDED FINDER -->
+  <section id="finder" class="finder">
+    <div class="wrap">
+      <div class="finder-card">
+        <div class="finder-head">
+          <h3>Not sure where to start? Answer three questions.</h3>
+          <p>Based on the Playbook's decision tree — narrows 122 programmes down to yours.</p>
+        </div>
+        <div class="field">
+          <label for="fStage">Your stage</label>
+          <select id="fStage">
+            <option value="">Any stage</option>
+            <option value="ideation">Ideation — just an idea</option>
+            <option value="prototype">Prototype / PoC</option>
+            <option value="seed">Seed / early revenue</option>
+            <option value="scaling">Growth / scaling</option>
+            <option value="market">Ready to sell / protect IP</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fCategory">What you need</label>
+          <select id="fCategory">
+            <option value="">Anything</option>
+            <option value="Grant">Grant (no repayment)</option>
+            <option value="Equity">Equity investment</option>
+            <option value="Loan / Credit">Loan / credit guarantee</option>
+            <option value="Incubation">Incubation / mentoring</option>
+            <option value="Market Access">Market access / GeM</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="fSector">Your sector</label>
+          <select id="fSector">
+            <option value="">All sectors</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" id="finderGo">Show results →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIRECTORY -->
+  <section id="directory" class="directory">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Central Government Directory</h2>
+        <p>All 69 Central schemes from the Playbook — startup-specific and startup-relevant. Search, filter, or scan by category.</p>
+      </div>
+
+      <div class="legend" id="categoryLegend"></div>
+
+      <div class="filterbar">
+        <div class="search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" placeholder="Search by name, ministry, keyword…" aria-label="Search schemes">
+        </div>
+        <select class="chip-select" id="filterPart" aria-label="Filter by eligibility type">
+          <option value="">All eligibility types</option>
+          <option value="A">Startup-Specific</option>
+          <option value="B">Startup-Relevant</option>
+        </select>
+        <select class="chip-select" id="filterStage" aria-label="Filter by stage">
+          <option value="">All stages</option>
+          <option value="ideation">Ideation</option>
+          <option value="prototype">Prototype / PoC</option>
+          <option value="seed">Seed / Early-Stage</option>
+          <option value="scaling">Growth / Scaling</option>
+          <option value="market">Market Access &amp; IP</option>
+          <option value="incubation">Incubation</option>
+          <option value="credit">Credit Support</option>
+        </select>
+        <select class="chip-select" id="filterSector" aria-label="Filter by sector">
+          <option value="">All sectors</option>
+        </select>
+        <span class="result-count" id="resultCount"></span>
+      </div>
+      <button class="clear-filters" id="clearFilters" style="display:none;">Clear all filters ×</button>
+
+      <div class="grid" id="schemeGrid"></div>
+      <div class="empty-state" id="emptyState" style="display:none;">No schemes match those filters. Try clearing one.</div>
+      <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
+        <button class="btn btn-ghost" id="loadMoreBtn">Show more schemes</button>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- PSU / STATE -->
+  <section id="other-initiatives">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Beyond the Centre</h2>
+        <p>Public sector undertakings, regulators, and every State &amp; UT run their own startup support on top of Central schemes.</p>
+      </div>
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="psu">PSU &amp; Regulators (17)</button>
+        <button class="tab-btn" data-tab="state">State &amp; UT Policies (36)</button>
+      </div>
+      <div class="tab-panel active" id="tab-psu">
+        <div class="simple-grid" id="psuGrid"></div>
+      </div>
+      <div class="tab-panel" id="tab-state">
+        <div class="simple-grid" id="stateGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- GLOSSARY -->
+  <section id="glossary">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Glossary</h2>
+        <p>The acronyms and terms you'll run into across every scheme document.</p>
+      </div>
+      <dl class="glossary-list" id="glossaryList"></dl>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div>
+      <h4>Yojana Atlas</h4>
+      <p>An independent, searchable index of Central Government schemes, PSU/regulator initiatives, and State &amp; UT startup policies — built to help founders find support without wading through 100+ pages of PDF.</p>
+      <div class="disclaimer-box">
+        <strong>Disclaimer.</strong> Compiled from the publicly available "Playbook of Government Schemes and Initiatives for Startups" (June 2026) on a best-effort basis. Scheme guidelines, funding amounts, and application windows change — always verify eligibility and current status on the official ministry or agency website before applying.
+      </div>
+    </div>
+    <div>
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="#lifecycle">Lifecycle Map</a></li>
+        <li><a href="#finder">Guided Finder</a></li>
+        <li><a href="#directory">Full Directory</a></li>
+        <li><a href="#other-initiatives">PSU &amp; States</a></li>
+        <li><a href="#glossary">Glossary</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Official Sources</h4>
+      <ul>
+        <li><a href="https://www.startupindia.gov.in/" target="_blank" rel="noopener">Startup India Portal</a></li>
+        <li><a href="https://seedfund.startupindia.gov.in/" target="_blank" rel="noopener">SISFS Portal</a></li>
+        <li><a href="https://gem.gov.in/" target="_blank" rel="noopener">GeM Marketplace</a></li>
+        <li><a href="https://dpiit.gov.in/" target="_blank" rel="noopener">DPIIT</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>Data source: Playbook of Government Schemes &amp; Initiatives for Startups, June 2026.</span>
+    <span>Not an official Government of India property.</span>
+  </div>
+</footer>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <div class="modal-tag-row" id="modalTags"></div>
+    <h2 id="modalTitle"></h2>
+    <div class="ministry" id="modalMinistry"></div>
+    <div id="modalBody"></div>
+    <div class="modal-links" id="modalLinks"></div>
+  </div>
+</div>
+
+<script src="yojana-atlas-data.js"></script>
+<script>
+(function(){
+  "use strict";
+  const schemes = YOJANA_DATA.schemes;
+  const glossary = YOJANA_DATA.glossary;
+  const centralSchemes = schemes.filter(s => s.part === 'A' || s.part === 'B');
+  const psuSchemes = schemes.filter(s => s.part === 'psu');
+  const stateSchemes = schemes.filter(s => s.part === 'state');
+
+  /* ---------- Theme ---------- */
+  const themeBtn = document.getElementById('themeToggle');
+  function applyTheme(t){
+    document.documentElement.setAttribute('data-theme', t);
+    themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+    localStorage.setItem('yatheme', t);
+  }
+  let savedTheme = localStorage.getItem('yatheme');
+  if(!savedTheme){ savedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light'; }
+  applyTheme(savedTheme);
+  themeBtn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
+  });
+
+  /* ---------- Stats ---------- */
+  document.getElementById('statA').textContent = schemes.filter(s=>s.part==='A').length;
+  document.getElementById('statB').textContent = schemes.filter(s=>s.part==='B').length;
+  document.getElementById('statPsu').textContent = psuSchemes.length;
+  document.getElementById('statState').textContent = stateSchemes.length;
+  document.getElementById('statMinistries').textContent = new Set(centralSchemes.map(s=>s.ministry).filter(Boolean)).size + '+';
+
+  /* ---------- Category colors ---------- */
+  const CAT_COLORS = {
+    'Grant': 'var(--teal)',
+    'Equity': 'var(--violet)',
+    'Loan / Credit': 'var(--vermilion)',
+    'Incubation': 'var(--amber)',
+    'Market Access': 'var(--steel)',
+    'Mixed Support': 'var(--charcoal)',
+    'Other': 'var(--ink-soft)'
+  };
+  function catColor(label){ return CAT_COLORS[label] || CAT_COLORS['Other']; }
+
+  const STAGE_META = [
+    {key:'ideation', label:'Ideation', desc:'Have an idea, no prototype'},
+    {key:'prototype', label:'Prototype / PoC', desc:'Building or testing'},
+    {key:'seed', label:'Seed', desc:'Entering market'},
+    {key:'scaling', label:'Growth', desc:'Scaling operations'},
+    {key:'market', label:'Market & IP', desc:'Sell, export, protect'},
+  ];
+
+  /* ---------- Lifecycle line ---------- */
+  const lineTrack = document.getElementById('lineTrack');
+  STAGE_META.forEach(st => {
+    const count = centralSchemes.filter(s => s.stageBuckets.includes(st.key)).length;
+    const btn = document.createElement('button');
+    btn.className = 'station';
+    btn.dataset.stage = st.key;
+    btn.setAttribute('role','tab');
+    btn.innerHTML = `<span class="station-dot">${count}</span><span class="station-label">${st.label}</span><div class="station-desc">${st.desc}</div>`;
+    btn.addEventListener('click', () => {
+      document.getElementById('filterStage').value = st.key;
+      applyFilters();
+      document.getElementById('directory').scrollIntoView({behavior:'smooth', block:'start'});
+      document.querySelectorAll('.station').forEach(s=>s.classList.remove('active'));
+      btn.classList.add('active');
+    });
+    lineTrack.appendChild(btn);
+  });
+
+  /* ---------- Sector options ---------- */
+  const allSectors = Array.from(new Set(centralSchemes.flatMap(s=>s.sectorTags))).filter(s=>s!=='General').sort();
+  const sectorSelectDirectory = document.getElementById('filterSector');
+  const sectorSelectFinder = document.getElementById('fSector');
+  allSectors.forEach(sec => {
+    [sectorSelectDirectory, sectorSelectFinder].forEach(sel => {
+      const o = document.createElement('option');
+      o.value = sec; o.textContent = sec;
+      sel.appendChild(o);
+    });
+  });
+
+  /* ---------- Category legend ---------- */
+  const legendEl = document.getElementById('categoryLegend');
+  const categories = Array.from(new Set(centralSchemes.map(s=>s.categoryLabel)));
+  let activeCategory = '';
+  categories.forEach(cat => {
+    const b = document.createElement('button');
+    b.innerHTML = `<span class="dot" style="background:${catColor(cat)}"></span>${cat}`;
+    b.dataset.cat = cat;
+    b.addEventListener('click', () => {
+      activeCategory = (activeCategory === cat) ? '' : cat;
+      document.querySelectorAll('.legend button').forEach(x=>x.classList.remove('active'));
+      if(activeCategory) b.classList.add('active');
+      applyFilters();
+    });
+    legendEl.appendChild(b);
+  });
+
+  /* ---------- Directory rendering ---------- */
+  const grid = document.getElementById('schemeGrid');
+  const emptyState = document.getElementById('emptyState');
+  const resultCount = document.getElementById('resultCount');
+  const searchInput = document.getElementById('searchInput');
+  const filterPart = document.getElementById('filterPart');
+  const filterStage = document.getElementById('filterStage');
+  const filterSector = document.getElementById('filterSector');
+  const clearFiltersBtn = document.getElementById('clearFilters');
+  const loadMoreWrap = document.getElementById('loadMoreWrap');
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+  const PAGE_SIZE = 24;
+  let visibleCount = PAGE_SIZE;
+
+  function matchesFilters(s){
+    const q = searchInput.value.trim().toLowerCase();
+    if(q){
+      const hay = [s.name, s.abbr, s.ministry, s.desc, s.sector].filter(Boolean).join(' ').toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    if(filterPart.value && s.part !== filterPart.value) return false;
+    if(filterStage.value && !s.stageBuckets.includes(filterStage.value)) return false;
+    if(filterSector.value && !s.sectorTags.includes(filterSector.value)) return false;
+    if(activeCategory && s.categoryLabel !== activeCategory) return false;
+    return true;
+  }
+
+  function cardHTML(s, i){
+    const benefit = s.benefits ? s.benefits.split(/[.;]/)[0] : (s.notes ? '' : '');
+    return `
+    <button class="card" data-id="${s.id}" style="animation-delay:${Math.min(i,10)*30}ms">
+      <div class="card-top">
+        <span class="card-tag" style="background:${catColor(s.categoryLabel)}">${s.categoryLabel}</span>
+        ${s.abbr ? `<span class="card-abbr">${s.abbr}</span>` : ''}
+      </div>
+      <h3>${s.name}</h3>
+      <div class="ministry">${s.ministry || ''}</div>
+      <div class="desc">${s.desc || ''}</div>
+      <div class="card-foot">
+        <span class="benefit">${benefit ? escapeHTML(benefit) : ''}</span>
+        <span class="stage">${s.stage || ''}</span>
+      </div>
+    </button>`;
+  }
+
+  function escapeHTML(str){
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  function renderGrid(){
+    const filtered = centralSchemes.filter(matchesFilters);
+    resultCount.textContent = filtered.length + ' of ' + centralSchemes.length + ' schemes';
+    const hasActiveFilter = searchInput.value.trim() || filterPart.value || filterStage.value || filterSector.value || activeCategory;
+    clearFiltersBtn.style.display = hasActiveFilter ? 'inline-block' : 'none';
+
+    if(filtered.length === 0){
+      grid.innerHTML = '';
+      emptyState.style.display = 'block';
+      loadMoreWrap.style.display = 'none';
+      return;
+    }
+    emptyState.style.display = 'none';
+    const slice = filtered.slice(0, visibleCount);
+    grid.innerHTML = slice.map((s,i)=>cardHTML(s,i)).join('');
+    loadMoreWrap.style.display = filtered.length > visibleCount ? 'flex' : 'none';
+
+    grid.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => openModal(card.dataset.id));
+    });
+  }
+
+  function applyFilters(){
+    visibleCount = PAGE_SIZE;
+    renderGrid();
+  }
+
+  [searchInput, filterPart, filterStage, filterSector].forEach(el => {
+    el.addEventListener('input', applyFilters);
+    el.addEventListener('change', applyFilters);
+  });
+  loadMoreBtn.addEventListener('click', () => { visibleCount += PAGE_SIZE; renderGrid(); });
+  clearFiltersBtn.addEventListener('click', () => {
+    searchInput.value=''; filterPart.value=''; filterStage.value=''; filterSector.value='';
+    activeCategory=''; document.querySelectorAll('.legend button').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.station').forEach(s=>s.classList.remove('active'));
+    applyFilters();
+  });
+
+  /* ---------- Finder ---------- */
+  document.getElementById('finderGo').addEventListener('click', () => {
+    filterStage.value = document.getElementById('fStage').value;
+    filterSector.value = document.getElementById('fSector').value;
+    const catVal = document.getElementById('fCategory').value;
+    activeCategory = catVal;
+    document.querySelectorAll('.legend button').forEach(b => {
+      b.classList.toggle('active', b.dataset.cat === catVal);
+    });
+    applyFilters();
+    document.getElementById('directory').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+
+  /* ---------- Modal ---------- */
+  const overlay = document.getElementById('modalOverlay');
+  const modalTags = document.getElementById('modalTags');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalMinistry = document.getElementById('modalMinistry');
+  const modalBody = document.getElementById('modalBody');
+  const modalLinks = document.getElementById('modalLinks');
+  let lastFocused = null;
+
+  function openModal(id){
+    const s = schemes.find(x => x.id === id);
+    if(!s) return;
+    lastFocused = document.activeElement;
+    modalTags.innerHTML = `
+      <span class="card-tag" style="background:${catColor(s.categoryLabel)}">${s.categoryLabel}</span>
+      <span class="card-tag" style="background:var(--ink-soft)">${s.part==='A' ? 'Startup-Specific' : s.part==='B' ? 'Startup-Relevant' : s.part.toUpperCase()}</span>
+      ${s.stage ? `<span class="card-tag" style="background:var(--hairline-strong); color:var(--ink);">${s.stage}</span>` : ''}
+    `;
+    modalTitle.textContent = s.name + (s.abbr ? ` (${s.abbr})` : '');
+    modalMinistry.textContent = s.ministry || '';
+    let body = '';
+    if(s.desc) body += section('What is it?', s.desc);
+    if(s.eligibility) body += section('Who can apply?', s.eligibility);
+    if(s.benefits) body += section('What do you get?', s.benefits);
+    if(s.howToApply) body += section('How to apply', s.howToApply);
+    if(s.sector) body += section('Sector focus', s.sector);
+    if(s.notes) body += section('Notes', s.notes);
+    modalBody.innerHTML = body;
+    modalLinks.innerHTML = s.website ? `<a class="btn btn-primary" href="${s.website}" target="_blank" rel="noopener">Visit official page →</a>` : `<span style="color:var(--ink-soft); font-size:.85rem;">No official link listed in the source document — search the ministry site directly.</span>`;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('modalClose').focus();
+  }
+  function section(title, text){
+    return `<div class="modal-section"><h4>${title}</h4><p>${escapeHTML(text)}</p></div>`;
+  }
+  function closeModal(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    if(lastFocused) lastFocused.focus();
+  }
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && overlay.classList.contains('open')) closeModal(); });
+
+  /* ---------- PSU / State simple grids ---------- */
+  function simpleCard(s){
+    return `<a class="simple-card" href="${s.website || '#'}" target="${s.website ? '_blank' : '_self'}" rel="noopener">
+      <b>${s.name}</b>
+      <span>${s.ministry || ''}</span>
+    </a>`;
+  }
+  document.getElementById('psuGrid').innerHTML = psuSchemes.map(simpleCard).join('');
+  document.getElementById('stateGrid').innerHTML = stateSchemes
+    .slice().sort((a,b)=>a.name.localeCompare(b.name))
+    .map(simpleCard).join('');
+
+  /* ---------- Tabs ---------- */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ---------- Glossary ---------- */
+  document.getElementById('glossaryList').innerHTML = glossary.map(g => `
+    <div class="gterm"><dt>${g.term}</dt><dd>${g.definition}</dd></div>
+  `).join('');
+
+  /* ---------- Mobile nav ---------- */
+  document.getElementById('navBurger').addEventListener('click', () => {
+    const nav = document.querySelector('nav.main');
+    const showing = nav.style.display === 'flex';
+    nav.style.display = showing ? 'none' : 'flex';
+    nav.style.cssText += showing ? '' : 'position:absolute; top:64px; left:0; right:0; background:var(--paper); flex-direction:column; padding:16px 28px; border-bottom:1px solid var(--hairline); gap:14px;';
+  });
+
+  /* ---------- Init ---------- */
+  renderGrid();
+})();
+</script>
+</body>
+</html>
