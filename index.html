@@ -366,6 +366,21 @@ footer a:hover{color:var(--saffron);}
 }
 .disclaimer-box{background:#1E2842; border-radius:12px; padding:16px 18px; font-size:.8rem; color:#B9BFD4; margin-top:16px; line-height:1.6;}
 
+/* ---------- Entry gate ---------- */
+.gate-overlay{
+  position:fixed; inset:0; background:rgba(15,20,35,.72); backdrop-filter:blur(4px);
+  display:none; align-items:center; justify-content:center; z-index:300; padding:24px;
+}
+.gate-overlay.open{display:flex;}
+.gate-modal{
+  background:var(--card); border-radius:20px; max-width:520px; width:100%; padding:34px 32px 30px;
+  box-shadow:0 30px 70px -20px rgba(0,0,0,.5); border:1px solid var(--hairline-strong);
+}
+.gate-modal .eyebrow{margin-bottom:14px;}
+.gate-modal h2{font-size:1.5rem; margin-bottom:14px; line-height:1.25;}
+.gate-modal p{font-size:.9rem; color:var(--ink-soft); line-height:1.65; margin:0;}
+.gate-modal .btn{width:100%; justify-content:center; margin-top:24px;}
+
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto;}
   *{animation-duration:.01ms !important; transition-duration:.01ms !important;}
@@ -374,6 +389,15 @@ footer a:hover{color:var(--saffron);}
 </head>
 <body>
 <a href="#directory" class="skip-link">Skip to scheme directory</a>
+
+<div class="gate-overlay" id="gateOverlay" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="gate-modal">
+    <span class="eyebrow">Before you continue</span>
+    <h2 id="gateTitle">Disclaimer</h2>
+    <p>Compiled from the publicly available "Playbook of Government Schemes and Initiatives for Startups" (June 2026) on a best-effort basis. Scheme guidelines, funding amounts, and application windows change — always verify eligibility and current status on the official ministry or agency website before applying.</p>
+    <button class="btn btn-primary" id="gateAccept">I understand, continue →</button>
+  </div>
+</div>
 
 <header class="site">
   <div class="header-row">
@@ -890,6 +914,20 @@ footer a:hover{color:var(--saffron);}
     const showing = nav.style.display === 'flex';
     nav.style.display = showing ? 'none' : 'flex';
     nav.style.cssText += showing ? '' : 'position:absolute; top:64px; left:0; right:0; background:var(--paper); flex-direction:column; padding:16px 28px; border-bottom:1px solid var(--hairline); gap:14px;';
+  });
+
+  /* ---------- Entry gate ---------- */
+  const gateOverlay = document.getElementById('gateOverlay');
+  const gateAccept = document.getElementById('gateAccept');
+  if(!sessionStorage.getItem('ssaDisclaimerSeen')){
+    gateOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    gateAccept.focus();
+  }
+  gateAccept.addEventListener('click', () => {
+    sessionStorage.setItem('ssaDisclaimerSeen', '1');
+    gateOverlay.classList.remove('open');
+    document.body.style.overflow = '';
   });
 
   /* ---------- Init ---------- */
